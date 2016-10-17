@@ -9,6 +9,7 @@ party_list = [ "PMDB", "PT", "PSDB", "PP", "PDT", "PTB", "DEM", "PR", "PSB", \
     "PPS", "PSC", "PCdoB", "PRB", "PV", "PSD", "PRP", "PSL", "PMN", "PHS", \
     "PTC", "PTdoB", "PSDC", "SD", "PTN", "PRTB", "PSOL", "PROS", "PEN", "PPL", \
     "PMB", "PSTU", "REDE", "PCB", "NOVO", "PCO"]
+
 '''
 Download all the 975 files of every party of every state, including DF
 '''
@@ -42,6 +43,7 @@ def download_file(url, fname):
             if chunk: # filter out keep-alive new chunks
                 f.write(chunk)
     return filename
+
 '''
 Create a md5 hash
 Stack Overflow questions/3431825
