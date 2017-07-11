@@ -4,3 +4,6 @@ init:
 
 start:
 	source venv/bin/activate
+
+download:
+	@python tsedata/tsedata.py

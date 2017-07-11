@@ -3,22 +3,22 @@ import hashlib
 from os import makedirs, path, remove
 from shutil import move
 
-uf_list = ["AC","AL","AP","AM","BA","CE","DF","ES","GO","MA","MT","MS","MG", \
-    "PR","PB","PA","PE","PI","RJ","RN","RS","RO","RR","SC","SE","SP","TO"]
-party_list = [ "PMDB", "PT", "PSDB", "PP", "PDT", "PTB", "DEM", "PR", "PSB", \
-    "PPS", "PSC", "PCdoB", "PRB", "PV", "PSD", "PRP", "PSL", "PMN", "PHS", \
-    "PTC", "PTdoB", "PSDC", "SD", "PTN", "PRTB", "PSOL", "PROS", "PEN", "PPL", \
-    "PMB", "PSTU", "REDE", "PCB", "NOVO", "PCO"]
+uf_list = ['AC','AL','AP','AM','BA','CE','DF','ES','GO','MA','MT','MS','MG',
+    'PR','PB','PA','PE','PI','RJ','RN','RS','RO','RR','SC','SE','SP','TO']
+party_list = ['DEM', 'NOVO', 'PCB', 'PCO', 'PC_do_B', 'PDT', 'PEN', 'PHS',
+    'PMB', 'PMDB', 'PMN', 'PP', 'PPL', 'PPS', 'PR', 'PRB', 'PROS', 'PRP',
+    'PRTB', 'PSB', 'PSC', 'PSD', 'PSDB', 'PSDC', 'PSL', 'PSOL', 'PSTU', 'PT',
+    'PTB', 'PTC', 'PTN', 'PT_do_B', 'PV', 'REDE', 'SD']
 
 '''
 Download all the 975 files of every party of every state, including DF
 '''
 def getdata( \
     url='http://agencia.tse.jus.br/estatistica/sead/eleitorado/filiados/uf/'):
-    fname = "filiados_{0}_{1}.zip"
+    fname = 'filiados_{0}_{1}.zip'
     url_complete = url + fname
-    rdirectory = "files/"
-    tdirectory = "files/tmp/"
+    rdirectory = 'files/'
+    tdirectory = 'files/tmp/'
     for party in party_list:
         for uf in uf_list:
             file_name = fname.format(party,uf).lower()
@@ -33,7 +33,7 @@ def getdata( \
 Download a single file base on the base url and the file name
 '''
 def download_file(url, fname):
-    directory = "files/tmp/"
+    directory = 'files/tmp/'
     if not path.exists(directory):
         makedirs(directory)
     filename = directory + fname
@@ -50,24 +50,23 @@ Stack Overflow questions/3431825
 '''
 def md5(fname):
     hash_md5 = hashlib.md5()
-    with open(fname, "rb") as f:
-        for chunk in iter(lambda: f.read(4096), b""):
+    with open(fname, 'rb') as f:
+        for chunk in iter(lambda: f.read(4096), b''):
             hash_md5.update(chunk)
     return hash_md5.hexdigest()
 
 '''
 Check if the file was already downloaded
-Problaly useless
 '''
 def check_file(fname,ffrom,fto):
-    if path.isfile(ffrom+fname): # Check if the original file existis
+    if path.isfile(ffrom+fname):
         rfile = md5(ffrom+fname)
     else:
         return False
-    if path.isfile(fto+fname): # check the new file
+    if path.isfile(fto+fname):
         tfile = md5(fto+fname)
     else:
-        print("check_file: No file downloaded")
+        print('check_file: No file downloaded')
     if rfile == tfile:
         return False
     else:
