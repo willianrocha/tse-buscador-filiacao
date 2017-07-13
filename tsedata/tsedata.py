@@ -50,7 +50,6 @@ class GetTSEData(object):
 
     '''
     Create a md5 hash
-    Stack Overflow questions/3431825
     '''
     def md5(self, fname):
         hash_md5 = hashlib.md5()

@@ -15,7 +15,6 @@ class TSE:
         'RN', 'RS', 'RO', 'RR', 'SC', 'SE', 'SP', 'TO']
         self._party_list = _party_list
         self._uf_list = _uf_list
-        self._csv_fields = csv_fields
 
     def download(self, partido=None, estado=None):
         if partido is None:

@@ -1,9 +1,7 @@
-init:
-	virtualenv venv
-	pip install -r requirements.txt
+clean:
+	@rm -rf *.pyc **/*.pyc *~
 
-start:
-	source venv/bin/activate
-
-download:
-	@python tsedata/tsedata.py
+test:
+	@make clean
+	@nosetests -s --verbose --with-coverage --cover-erase --cover-package=tsedata tests/*
+	@make clean
