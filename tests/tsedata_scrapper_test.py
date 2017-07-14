@@ -6,10 +6,6 @@ import requests
 from tsedata.tsedata import GetTSEData
 
 class TSEDataTest(unittest.TestCase):
-
-    def setUp(self):
-        self.tse = GetTSEData()
-
     @classmethod
     def setUpClass(cls):
         cls.tse = GetTSEData()
@@ -21,7 +17,7 @@ class TSEDataTest(unittest.TestCase):
         remove(cls.file_test)
         rmdir(cls.file_test_tmp)
 
-    def test_tse_url_path(self):
+    def test_tse_url_path(cls):
         url = 'http://agencia.tse.jus.br'
         path = '/estatistica/sead/eleitorado/filiados/uf/'
         fname = 'filiados_pcb_rr.zip'
@@ -30,30 +26,22 @@ class TSEDataTest(unittest.TestCase):
         tse_path = requests.get(full_path)
         assert tse_path.ok == True
 
-    def test_download_files(self):
+    def test_download_files(cls):
         url = 'http://agencia.tse.jus.br'
         path = '/estatistica/sead/eleitorado/filiados/uf/'
         fname = 'filiados_pcb_rr.zip'
         full_path = '{}{}{}'.format(url, path, fname)
-        tdir = 'tmp/'
+        tdir = 'tests/tmp/'
         path_to_tse = GetTSEData()
         path_to_tse_mock = '{}{}'.format(tdir, fname)
         when(path_to_tse) \
             .download_file(full_path, fname, tdir) \
             .thenReturn(path_to_tse_mock)
 
-        assert self.tse.download_file(full_path, fname, tdir) \
+        assert cls.tse.download_file(full_path, fname, tdir) \
                == path_to_tse.download_file(full_path, fname, tdir)
 
-    def test_gettsedata_getdata_existing(self):
-       p = ['pcb']
-       u = ['rr']
-       getdata_mock = GetTSEData()
-       when(getdata_mock).getdata(p, u).thenReturn([])
-
-       assert self.tse.getdata(p, u) == getdata_mock.getdata(p, u)
-
-    def test_gettsedata_getdata_new(self):
+    def test_gettsedata_getdata_new(cls):
        p = ['pcb']
        u = ['rr']
        rdirectory_test = 'tests/files/'
@@ -63,5 +51,5 @@ class TSEDataTest(unittest.TestCase):
             .getdata(p, u, rdirectory_test, tdirectory_test) \
             .thenReturn(['tests/tmp/filiados_pcb_rr.zip'])
 
-       assert self.tse.getdata(p, u, rdirectory_test, tdirectory_test) \
+       assert cls.tse.getdata(p, u, rdirectory_test, tdirectory_test) \
               == getdata_mock.getdata(p, u, rdirectory_test, tdirectory_test)
